@@ -46,6 +46,7 @@ public class BitVector {
             }
         }
     }
+    
     public int getInitialSize() {
         return bitCount;
     }
@@ -126,13 +127,11 @@ public class BitVector {
     public int getDecimalValue() {
         emptyCheck();
         String strBitVector = bitVectorToString().replaceAll("_", "");
-        int firstBit = Character.getNumericValue(strBitVector.charAt(0));
-        if (firstBit == 1) {
+        if (strBitVector.charAt(0) == '1') {
             strBitVector = strBitVector.replace('1', '5').replace('0', '1').replace('5', '0');
             return (-(Integer.parseInt(strBitVector, 2) + 1));
         }
         return Integer.parseInt(strBitVector, 2);
-
     }
 
     public void extendBitVector(int bits) {
