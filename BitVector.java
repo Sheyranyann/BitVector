@@ -65,10 +65,7 @@ public class BitVector {
         if(isNotLargeEnough(index)) {
             throw new BitVectorOutOfBoundsException("Invalid index for resetting");
         }
-        if (!isSet(index)) {
-            return;
-        }
-        bitVector[size - 1 - index / 8] ^= (1 << index % 8);;
+        bitVector[size - 1 - index / 8] &= ~(1 << index % 8);;
     }
 
     public void setAll() {
