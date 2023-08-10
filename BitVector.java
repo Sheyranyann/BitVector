@@ -27,6 +27,9 @@ public class BitVector {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        if (strBitVector == null) {   // to avoid NullPointerException if the file is empty
+            strBitVector = "";
+        }
         strBitVector = strBitVector.replaceAll("_", "");
         bitCount = strBitVector.length();
         setFields();
