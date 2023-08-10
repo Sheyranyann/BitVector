@@ -46,18 +46,9 @@ public class BitVector {
             }
         }
     }
-    
+
     public int getInitialSize() {
         return bitCount;
-    }
-
-    private void setFields() {
-        if (bitCount % 8 == 0) {
-            size = bitCount / 8;
-        } else {
-            size = bitCount / 8 + 1;
-        }
-        bitVector = new byte[size];
     }
 
     public void set(int index) {
@@ -89,13 +80,6 @@ public class BitVector {
         Arrays.fill(bitVector, (byte) 0);
     }
 
-    public boolean isSet(int index) {
-        if (isNotLargeEnough(index)) {
-            throw new BitVectorOutOfBoundsException();
-        }
-        return (bitVector[size - 1 - index / 8] & (1 << index % 8)) != 0;
-    }
-
     private String bitVectorToString() {
         StringBuilder stringBitVector = new StringBuilder();
         for (int i = 0; i < size; i++) {
@@ -124,14 +108,20 @@ public class BitVector {
         }
     }
 
-    public int getDecimalValue() {
+    public long getSignedDecimalValue() {
         emptyCheck();
         String strBitVector = bitVectorToString().replaceAll("_", "");
         if (strBitVector.charAt(0) == '1') {
             strBitVector = strBitVector.replace('1', '5').replace('0', '1').replace('5', '0');
-            return (-(Integer.parseInt(strBitVector, 2) + 1));
+            return (-(Long.parseLong(strBitVector, 2) + 1));
+        } else {
+            return Long.parseLong(strBitVector, 2);
         }
-        return Integer.parseInt(strBitVector, 2);
+    }
+
+    public long getUnsignedDecimalValue() {
+        emptyCheck();
+        return Long.parseLong(bitVectorToString().replaceAll("_", ""), 2);
     }
 
     public void extendBitVector(int bits) {
@@ -153,6 +143,32 @@ public class BitVector {
         System.arraycopy(bitVector, 0, temp, newSize - size, size);
         size = newSize;
         bitVector = temp;
+    }
+
+    public void signExtendBitVector(int bits) {
+        extendBitVector(bits);
+        if (isSet(bitCount - bits - 1)) {
+            while(bits != 0){
+                set(bitCount - bits--);
+            }
+        }
+
+    }
+
+    public boolean isSet(int index) {
+        if (isNotLargeEnough(index)) {
+            throw new BitVectorOutOfBoundsException();
+        }
+        return (bitVector[size - 1 - index / 8] & (1 << index % 8)) != 0;
+    }
+
+    private void setFields() {
+        if (bitCount % 8 == 0) {
+            size = bitCount / 8;
+        } else {
+            size = bitCount / 8 + 1;
+        }
+        bitVector = new byte[size];
     }
 
     private boolean isNotLargeEnough(int index) {
