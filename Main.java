@@ -30,16 +30,22 @@ public class Main {
 //      bitVector2.set(-2);
 //      bitVector1.set(0);
 
+        //writing in file
+        bitVector2.writeInFile("bitVector2_1.txt");
+////      BitVectorOutOfBoundsException (bit vector is empty)
+//      bitVector1.writeInFile("empty.txt");
+
 
         //Setting all values
         bitVector2.setAll();
+        bitVector2.writeInFile("bitVector2_2.txt");
 ////      BitVectorOutOfBoundsException (bit vector is empty)
 //        bitVector1.setAll();
-
 
         //Resetting values
         bitVector2.reset(7);
         bitVector2.reset(1);
+        bitVector2.writeInFile("bitVector2_3.txt");
 ////      BitVectorOutOfBoundsException (Invalid index for resetting)
 //      bitVector2.set(9);
 //      bitVector2.reset(-18);
@@ -48,6 +54,7 @@ public class Main {
 
         //Resetting all values
         bitVector2.resetAll();
+        bitVector2.writeInFile("bitVector2_4.txt");
 ////      BitVectorOutOfBoundsException (bit vector is empty)
 //        bitVector1.resetAll();
 
@@ -58,34 +65,40 @@ public class Main {
         System.out.println(5 + " index of bitvector2 is set: " + bitVector2.isSet(5));
 ////      BitVectorOutOfBoundsException
 //      System.out.println(0 + " index of bitvector1 is set: " + bitVector1.isSet(0));
-
-
-        //writing in file
-        bitVector2.writeInFile("bitVector2.txt");
-////      BitVectorOutOfBoundsException (bit vector is empty)
-//      bitVector1.writeInFile("empty.txt");
+        System.out.println();
 
 
         //Extending bit vector by given quantity of bits
         bitVector2.extendBitVector(4);
-        bitVector1.extendBitVector(20);
+        bitVector2.signExtendBitVector(4);
+        bitVector2.set(16);
+        bitVector2.signExtendBitVector(10);
+        bitVector2.writeInFile("bitVector2_5.txt");
+////        BitVectorOutOfBoundsException
+//        bitVector2.signExtendBitVector(-2);
+
+        bitVector1.extendBitVector(11);
+        bitVector1.writeInFile("bitVector1_1.txt");
 //        Invalid number for extending bit vector
         bitVector1.extendBitVector(-20);
+        System.out.println();
 
 
         //Calculating decimal value
-        bitVector2.set(12);
         bitVector1.set(2);
-        bitVector1.set(10);
-        bitVector1.writeInFile("bitVector1.txt");
-        bitVector2.writeInFile("bitVector2.txt");
+        bitVector1.set(9);
+        bitVector1.writeInFile("bitVector1_2.txt");
+        bitVector2.writeInFile("bitVector2_6.txt");
         //positive result
-        System.out.println("Decimal value of bitvector1 is: " + bitVector1.getDecimalValue());
+        System.out.println("Decimal value of signed bitvector1 is: " + bitVector1.getSignedDecimalValue());
+        System.out.println("Decimal value of unsigned bitvector1 is: " + bitVector1.getUnsignedDecimalValue());
         //negative result
-        System.out.println("Decimal value of bitvector2 is: " + bitVector2.getDecimalValue());
-
-        bitVector2.setAll();
-        System.out.println("Decimal value of bitvector2 is: " + bitVector2.getDecimalValue());
+        System.out.println("Decimal value of signed bitvector2 is: " + bitVector2.getSignedDecimalValue());
+        System.out.println("Decimal value of unsigned bitvector2 is: " + bitVector2.getUnsignedDecimalValue());
+        bitVector1.setAll();
+        bitVector1.writeInFile("bitVector1_3.txt");
+        System.out.println("Decimal value of signed bitvector1 is: " + bitVector1.getSignedDecimalValue());
+        System.out.println("Decimal value of unsigned bitvector1 is: " + bitVector1.getUnsignedDecimalValue());
 
 
         /*Example of reading from file and writing back
@@ -99,5 +112,3 @@ public class Main {
 
     }
 }
-
-
