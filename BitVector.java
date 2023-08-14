@@ -20,10 +20,8 @@ public class BitVector {
 
     public BitVector(String fileName) {
         String strBitVector = "";
-        try {
-            BufferedReader reader = new BufferedReader(new FileReader(fileName));
+        try (BufferedReader reader = new BufferedReader(new FileReader(fileName));){
             strBitVector = reader.readLine();
-            reader.close();
         } catch (IOException e) {
             e.printStackTrace();
         }
